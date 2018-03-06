@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 
-namespace BotBlog.Dialogs
+namespace Bot4App.Dialogs
 {
     [Serializable]
     public class RootDialog : IDialog<object>
@@ -14,6 +14,8 @@ namespace BotBlog.Dialogs
 
             return Task.CompletedTask;
         }
+
+
 
         private async Task MessageReceivedAsync(IDialogContext context, IAwaitable<object> result)
         {
