@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Bot4App.Dialogs.Luis.ai;
- 
+using BotBlog.Models;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.FormFlow;
 using Microsoft.Bot.Connector;
@@ -24,11 +25,7 @@ namespace Bot4App
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
             ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
-            var _msg = $"Estou aprendendo muitas coisas, mas veja o que já posso fazer:\n" +
-                              "* **Pergunte sobre mim**, tipo: *O que você é?*, ou algo assim\n" +
-                              "* **Solicitar uma proposta**, tipo: *Pode enviar uma proposta?*, ou algo assim\n" +
-                              "* **Traduzir textos**, tipo: *Traduz pra mim ?*, ou algo assim\n" +
-                              "* **Contar piadas**, tipo: *Me conte uma piada?*, ou algo assim\n";
+            var _msg = KeyPassAndPhrase._MsgHelp;
 
             if (activity.Type == ActivityTypes.Message)
             {
@@ -46,8 +43,7 @@ namespace Bot4App
                         {
                             //await this.SendConversation(activity);
                             var reply = activity.CreateReply();
-                            reply.Text = $"**( ͡° ͜ʖ ͡°)**  Oi sou o Bot, estou aprendendo muitas coisas.. " +
-                                $"quero lhe ajudar a me entender... vamos la ? ";
+                            reply.Text = $"**( ͡° ͜ʖ ͡°)**  Oi sou o Bot deste Blog, estou aprendendo com todas as postagens... " ;
                             await connector.Conversations.ReplyToActivityAsync(reply);
 
                             await SendBotIsTyping(activity);

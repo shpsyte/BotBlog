@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 namespace Bot4App.QnA
 {
     [Serializable]
-    public class QnaAboutMe : QnAMakerDialog
+    public class QnaSenseBot : QnAMakerDialog
     {
-        private readonly static string _QnaKnowledgedId = KeyPassAndPhrase._QnaKnowledgedJoseId;
+        private readonly static string _QnaKnowledgedId = KeyPassAndPhrase._QnaKnowledgedSenseId;
         private readonly static string _QnaSubscriptionKey = KeyPassAndPhrase._QnaSubscriptionKey;
         private readonly static string _DefatulMsg = KeyPassAndPhrase._MsgNotUndertand;
         private readonly static double _Score = KeyPassAndPhrase._Score;
         private readonly static int _QtyAnswerReturn = KeyPassAndPhrase._QtyAnswerReturn;
+        
 
-
-        public QnaAboutMe() : base(new QnAMakerService(new QnAMakerAttribute(_QnaSubscriptionKey, _QnaKnowledgedId, _DefatulMsg, _Score, _QtyAnswerReturn)))
+        public QnaSenseBot() : base(new QnAMakerService(new QnAMakerAttribute(_QnaSubscriptionKey, _QnaKnowledgedId, _DefatulMsg, _Score, _QtyAnswerReturn)))
         {
 
         }
@@ -45,36 +45,29 @@ namespace Bot4App.QnA
 
         }
 
- 
 
         ////// Override to log matched Q&A before ending the dialog
         protected override async Task DefaultWaitNextMessageAsync(IDialogContext context, IMessageActivity message, QnAMakerResults results)
         {
-           // await base.DefaultWaitNextMessageAsync(context, message, results);
-           //  await context.PostAsync("It taht");
-
-
-            var answer = results.Answers.First().Answer;
-            //string[] qnaAnswerData = answer.Split(';');
-            //string qnaURL = qnaAnswerData[2];
-
-            // pass user's question
-            var userQuestion = (context.Activity as Activity).Text;
-
-            context.Call(new BotBlog.Dialogs.Qna.FeedbackDialog("url", userQuestion), ResumeAfterFeedback);
+            await base.DefaultWaitNextMessageAsync(context, message, results);
+            // await context.PostAsync("It taht");
 
         }
 
 
-        private async Task ResumeAfterFeedback(IDialogContext context, IAwaitable<IMessageActivity> result)
+
+
+        //// Qunado o ML está ativa este metodo pergunta: "Você quis dizer isso ?" para que o qna possa aprender.
+        protected override async Task QnAFeedbackStepAsync(IDialogContext context, QnAMakerResults qnaMakerResults)
         {
-            if (await result != null)
+            // responding with the top answer when score is above some threshold
+            if (qnaMakerResults.Answers.Count > 0 && qnaMakerResults.Answers.FirstOrDefault().Score > 0.75)
             {
-                await MessageReceivedAsync(context, result);
+                await context.PostAsync(qnaMakerResults.Answers.FirstOrDefault().Answer);
             }
             else
             {
-                context.Done<IMessageActivity>(null);
+                await base.QnAFeedbackStepAsync(context, qnaMakerResults);
             }
         }
 

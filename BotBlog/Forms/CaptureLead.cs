@@ -14,9 +14,9 @@ namespace Bot4App.Forms
     [Template(TemplateUsage.NotUnderstood, "Hum, esta opção não é valida \"{0}\".")]
     public class CaptureLead
     {
-        [Describe("Tipo do Bot")]
+        [Describe("Tipo do Desenvolvimento")]
         [Template(TemplateUsage.EnumSelectOne, "Qual tipo de {&} que gostaria de criar ? {||}", ChoiceStyle = ChoiceStyleOptions.Buttons)]
-        public TipoBot TipoBot { get; set; }
+        public TipoDesenvolvimento TipoDesenvolvimento { get; set; }
 
         [Prompt("Qual o seu Nome ?")]
         [Describe("Nome")]
@@ -31,16 +31,11 @@ namespace Bot4App.Forms
         //[Pattern(@"^\d$")]
         public string Fone { get; set; }
 
-        [Prompt("Quer adicionar alguma observação ?")]
+        [Prompt("Me fala um pouco sobre o que você precisa...")]
         [Optional]
         public string Describe { get; set; }
 
-        [Optional]
-        // [Prompt("Você tem API ? {||}")]
-        [Template(TemplateUsage.EnumSelectOne, "Você quer integrar com seu sistema ? ", ChoiceStyle = ChoiceStyleOptions.Buttons)]
-        //      [Template(TemplateUsage.CurrentChoice, "Nenhuma opção")]
-        public Api api { get; set; }
-
+       
         public static IForm<CaptureLead> BuildForm()
         {
 
@@ -103,12 +98,11 @@ namespace Bot4App.Forms
         public override string ToString()
         {
             var builder = new StringBuilder();
-            builder.AppendFormat("Tipo de Bot.: {0}, ", TipoBot);
+            builder.AppendFormat("Tipo de Desenvolvimento.: {0}, ", TipoDesenvolvimento);
             builder.AppendFormat("Nome: {0}: ", Name);
             builder.AppendFormat("Email: {0} ", Email);
             builder.AppendFormat("Fone: {0} ", Fone);
             builder.AppendFormat("Descrição: {0} ", Describe);
-            builder.AppendFormat("Tem API: {0} ", api);
 
             return builder.ToString();
         }
@@ -116,20 +110,20 @@ namespace Bot4App.Forms
     }
 
 
-    public enum TipoBot
+    public enum TipoDesenvolvimento
     {
         [Describe("Outro")]
-        [Terms("Outro", "O", "outro")]
+        [Terms("1", "Outro", "O", "outro")]
         Outro = 1,
-        [Describe("Atendimento")]
-        [Terms("Atend", "A", "atendimento")]
-        Atendimento,
-        [Describe("Prospect")]
-        [Terms("Cap", "C", "Captura", "lead", "Prospect", "Captura de Bot")]
-        CapLead,
-        [Describe("FaQ")]
-        [Terms("faq", "F", "faq", "Faq")]
-        Faq
+        [Describe("WEB")]
+        [Terms("2", "Web", "na web")]
+        Web,
+        [Describe("Mobile")]
+        [Terms("3", "Mob", "M", "Mobile", "celular")]
+        Mobile,
+        [Describe("Desktop")]
+        [Terms("Desktop", "D", "desk", "pc")]
+        Desktop
     }
 
 

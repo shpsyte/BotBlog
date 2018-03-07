@@ -1,4 +1,5 @@
-﻿using Microsoft.Bot.Builder.CognitiveServices.QnAMaker;
+﻿using BotBlog.Models;
+using Microsoft.Bot.Builder.CognitiveServices.QnAMaker;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 using System;
@@ -10,9 +11,11 @@ namespace Bot4App.QnA
     [Serializable]
     public class QnaGreeting : QnAMakerDialog
     {
-
-        private readonly static string _QnaKnowledgedId = "e927f92d-08da-40a4-9f84-804134c0456b"; //ConfigurationManager.AppSettings["QnaSubscriptionKey"]
-        private readonly static string _QnaSubscriptionKey = "ac1a50f16e0b400f93e81d87eea081fc"; //ConfigurationManager.AppSettings["QnaKnowledgedId"]
+        private readonly static string _QnaKnowledgedId = KeyPassAndPhrase._QnaKnowledgedSenseId;
+        private readonly static string _QnaSubscriptionKey = KeyPassAndPhrase._QnaSubscriptionKey;
+        private readonly static string _DefatulMsg = KeyPassAndPhrase._MsgNotUndertand;
+        private readonly static double _Score = KeyPassAndPhrase._Score;
+        private readonly static int _QtyAnswerReturn = KeyPassAndPhrase._QtyAnswerReturn;
 
         public QnaGreeting() : base(new QnAMakerService(new QnAMakerAttribute(_QnaKnowledgedId, _QnaSubscriptionKey, "Desculpe, não entendi sua pergunta", 0.3, 3)))
         {

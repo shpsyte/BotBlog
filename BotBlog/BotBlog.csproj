@@ -130,7 +130,10 @@
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Dialogs\Luis.ai\LuisBasicDialog.cs" />
     <Compile Include="Dialogs\Luis.ai\RequestQuoteDialog.cs" />
+    <Compile Include="Dialogs\Qna\FeedbackDialog.cs" />
     <Compile Include="Dialogs\Qna\QnaAboutMe.cs" />
+    <Compile Include="Dialogs\Qna\QnaSenseBot.cs" />
+    <Compile Include="Dialogs\Qna\QnaBlogSite.cs" />
     <Compile Include="Dialogs\Qna\QnaGreeting.cs" />
     <Compile Include="Dialogs\RootDialog.cs" />
     <Compile Include="Forms\CaptureLead.cs" />
@@ -139,6 +142,7 @@
     </Compile>
     <Compile Include="Models\Domain.cs" />
     <Compile Include="Models\FakeList.cs" />
+    <Compile Include="Models\KeyPass.cs" />
     <Compile Include="Models\QnAMakerResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicos\Servicos.cs" />

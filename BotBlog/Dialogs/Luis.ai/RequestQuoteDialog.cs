@@ -8,19 +8,17 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Net.Mail;
 using Bot4App.Forms;
+using BotBlog.Models;
 
 namespace Bot4App.Dialogs.Luis.ai
 {
     [Serializable]
     public class RequestQuoteDialog : LuisDialog<object>
     {
-        private readonly static string _LuisModelId = "a2ca67c6-9f1c-43ee-90e1-c9c297d5f330"; //ConfigurationManager.AppSettings["QnaSubscriptionKey"]
-        private readonly static string _LuiSubscriptionKey = "a8046f7776b7494db8f1ea873eac5c3e"; //ConfigurationManager.AppSettings["LuisId"]
-        private readonly static string _msg = $"Estou aprendendo muitas coisas, mas veja o que já posso fazer:\n" +
-                             "* **Pergunte sobre mim**, tipo: *O que você é?*, ou algo assim\n" +
-                             "* **Solicitar um orçamento**, tipo: *Pode enviar um orçamento?*, ou algo assim\n" +
-                             "* **Traduzir textos**, tipo: *Traduz pra mim ?*, ou algo assim\n" +
-                             "* **Contar piadas**, tipo: *Me conte uma piada?*, ou algo assim\n";
+        private readonly static string _LuisModelId = KeyPassAndPhrase._LuisModelId;
+        private readonly static string _LuiSubscriptionKey = KeyPassAndPhrase._LuiSubscriptionKey;
+        private readonly static string _MsgNotUndertand = KeyPassAndPhrase._MsgNotUndertand;
+        private readonly static string _DefaultMsgHelp = KeyPassAndPhrase._MsgHelp;
 
 
         public RequestQuoteDialog() : base(new LuisService(new LuisModelAttribute(_LuisModelId, _LuiSubscriptionKey, LuisApiVersion.V2)))
