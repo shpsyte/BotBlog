@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -69,4 +70,33 @@ namespace Bot4App.Services
             return $"Tradução: **{ content }**";
         }
     }
+
+
+    public class Email
+    {
+
+
+
+        public static Task SendEmail(string subject, string body)
+        {
+            MailMessage mail = new MailMessage("jose.luiz@iscosistemas.com", "jose.luiz@iscosistemas.com");
+            SmtpClient client = new SmtpClient();
+            client.Port = 587;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+            client.Timeout = 10000;
+            client.Credentials = new System.Net.NetworkCredential("jose.luiz@iscosistemas.com", "Jymkatana_6985");
+            client.Host = "mail.iscosistemas.com";
+            mail.Subject = subject;
+            mail.Body = body;
+            client.SendMailAsync(mail);
+
+            return null;
+
+        }
+    }
+
+
+
+
 }

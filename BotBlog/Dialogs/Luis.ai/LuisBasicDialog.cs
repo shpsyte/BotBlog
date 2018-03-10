@@ -106,6 +106,27 @@ namespace Bot4App.Dialogs.Luis.ai
         [LuisIntent("request-quote")]
         public async Task ForwardRequestQuote(IDialogContext context, LuisResult result) => await context.Forward(new RequestQuoteDialog(), ResumeAfterQnA, context.Activity, CancellationToken.None);
 
+
+        [LuisIntent("suggestion-article")]
+        public async Task SugestionArticle(IDialogContext context, LuisResult result) => await context.Forward(new SugestionArticleDialog(), ResumeAfterQnA, context.Activity, CancellationToken.None);
+
+
+        [LuisIntent("pay-article")]
+        public async Task PayArticle(IDialogContext context, LuisResult result)
+        {
+            var active = (context.Activity as Activity);
+            await context.PostAsync("Ok, para criar uma propaganda, vou precisar alguns dados...");
+            await MessagesController.SendBotIsTyping(active);
+            await context.PostAsync("Vamos lá..");
+
+
+            await context.Forward(new PayArticleDialog(), ResumeAfterQnA, context.Activity, CancellationToken.None);
+                
+        }
+
+
+
+
         [LuisIntent("search-bot")]
         public async Task Translate(IDialogContext context, LuisResult result)
         {

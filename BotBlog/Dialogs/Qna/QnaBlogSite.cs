@@ -57,7 +57,7 @@ namespace Bot4App.QnA
             await SendAwnser(context, result);
         }
 
-        private Attachment CreateCard(string titulo, string descricao, string url, string img, string data, bool postback = false)
+        private Attachment CreateCard(string titulo, string descricao, string url, string img, string data)
         {
 
 
@@ -67,23 +67,12 @@ namespace Bot4App.QnA
                 Subtitle = descricao,
             };
 
-            
-
-            if (postback)
-            {
-                card.Buttons = new List<CardAction>
-                {
-                    new CardAction(ActionTypes.PostBack, "Selecionar", value:url)
-                };
-
-            }
-            else
-            {
+             
                 card.Buttons = new List<CardAction>
                 {
                     new CardAction(ActionTypes.OpenUrl, "Visite", value:url)
                 };
-            }
+           
 
 
             card.Images = new List<CardImage>
@@ -156,11 +145,14 @@ namespace Bot4App.QnA
                     var data = dadosResposta[4];
 
 
-                    var card = CreateCard(titulo, descricao, url, img, data, true);
+                    var card = CreateCard(titulo, descricao, url, img, data);
                     resposta.AttachmentLayout = AttachmentLayoutTypes.Carousel;
                     resposta.Attachments.Add(card);
                 }
                 await context.PostAsync(resposta);
+
+                var userQuestion = (context.Activity as Activity).Text;
+                context.Call(new BotBlog.Dialogs.Qna.FeedbackDialog("url", userQuestion), ResumeAfterFeedback);
 
             }
         }

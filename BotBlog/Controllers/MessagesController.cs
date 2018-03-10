@@ -43,7 +43,7 @@ namespace Bot4App
                         {
                             //await this.SendConversation(activity);
                             var reply = activity.CreateReply();
-                            reply.Text = $"**( ͡° ͜ʖ ͡°)**  Oi sou o Bot deste Blog, estou aprendendo com todas as postagens... " ;
+                            reply.Text = $"**( ͡° ͜ʖ ͡°)**  Oi sou um ChatBot, aprendendo todos os dias com as postagens... " ;
                             await connector.Conversations.ReplyToActivityAsync(reply);
 
                             await SendBotIsTyping(activity);

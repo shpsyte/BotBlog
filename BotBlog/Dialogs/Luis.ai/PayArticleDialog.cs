@@ -13,7 +13,7 @@ using BotBlog.Models;
 namespace Bot4App.Dialogs.Luis.ai
 {
     [Serializable]
-    public class RequestQuoteDialog : LuisDialog<object>
+    public class PayArticleDialog : LuisDialog<object>
     {
         private readonly static string _LuisModelId = KeyPassAndPhrase._LuisModelId;
         private readonly static string _LuiSubscriptionKey = KeyPassAndPhrase._LuiSubscriptionKey;
@@ -21,24 +21,24 @@ namespace Bot4App.Dialogs.Luis.ai
         private readonly static string _DefaultMsgHelp = KeyPassAndPhrase._MsgHelp;
 
 
-        public RequestQuoteDialog() : base(new LuisService(new LuisModelAttribute(_LuisModelId, _LuiSubscriptionKey, LuisApiVersion.V2)))
+        public PayArticleDialog() : base(new LuisService(new LuisModelAttribute(_LuisModelId, _LuiSubscriptionKey, LuisApiVersion.V2)))
         {
 
         }
 
 
 
-        [LuisIntent("request-quote")]
+        [LuisIntent("pay-article")]
         public async Task RequestQuoteForm(IDialogContext context, LuisResult result)
         {
 
 
             var activity = (context.Activity as Activity);
-            var capLeadForm = new CaptureLead();
+            var capLeadForm = new PayArticles();
             var entities = new List<EntityRecommendation>(result.Entities);
 
-            var form = new FormDialog<CaptureLead>(capLeadForm, CaptureLead.BuildForm, FormOptions.PromptInStart, entities);
-            context.Call<CaptureLead>(form, CaptureLeadComplete);
+            var form = new FormDialog<PayArticles>(capLeadForm, PayArticles.BuildForm, FormOptions.PromptInStart, entities);
+            context.Call<PayArticles>(form, CaptureLeadComplete);
 
             //await Conversation.SendAsync(activity, () => Chain.From(() => FormDialog.FromForm(() => CaptureLead.BuildForm(), FormOptions.PromptFieldsWithValues)));
 
@@ -46,11 +46,11 @@ namespace Bot4App.Dialogs.Luis.ai
         }
 
 
-        private async Task CaptureLeadComplete(IDialogContext context, IAwaitable<CaptureLead> result)
+        private async Task CaptureLeadComplete(IDialogContext context, IAwaitable<PayArticles> result)
         {
             var activity = (context.Activity as Activity);
 
-            CaptureLead order = null;
+            PayArticles order = null;
             try
             {
                 order = await result;
@@ -63,14 +63,10 @@ namespace Bot4App.Dialogs.Luis.ai
 
             if (order != null)
             {
+                await context.PostAsync("Ok, enviado, obrigado pela confiança , lembre-se pode digitar **ajuda** \n" +
+                        "Posso ajudar em algo mais ?");
 
-
-                await context.PostAsync("Ok, enviado, logo algum representante lhe fará contato., lembre-se pode digitar **ajuda** \n" +
-                    "Posso ajudar em algo mais ?");
-
-                await Services.Email.SendEmail("Sugstão de Artigo", order.ToString());
-
-                
+                await Services.Email.SendEmail("Anuncio Pago", order.ToString());
             }
             else
             {

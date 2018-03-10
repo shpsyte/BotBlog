@@ -13,11 +13,11 @@ namespace Bot4App.Forms
 {
     [Serializable]
     [Template(TemplateUsage.NotUnderstood, "Hum, esta opção não é valida \"{0}\".")]
-    public class CaptureLead
+    public class SuggesetionArticle
     {
-        [Describe("Tipo do Desenvolvimento")]
-        [Template(TemplateUsage.EnumSelectOne, "Qual tipo de {&} que gostaria de criar ? {||}", ChoiceStyle = ChoiceStyleOptions.Buttons)]
-        public TipoDesenvolvimento TipoDesenvolvimento { get; set; }
+        [Describe("Tipo do Artigo")]
+        [Template(TemplateUsage.EnumSelectOne, "Qual tipo de {&} que gostaria que eu cria-se ? {||}", ChoiceStyle = ChoiceStyleOptions.Buttons)]
+        public TipoArtigo TipoArtigo { get; set; }
 
         [Prompt("Qual o seu Nome ?")]
         [Describe("Nome")]
@@ -28,16 +28,13 @@ namespace Bot4App.Forms
         [Pattern(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$")]
         public string Email { get; set; }
 
-        [Prompt("Qual o seu Telefone ?")]
-        //[Pattern(@"^\d$")]
-        public string Fone { get; set; }
 
-        [Prompt("Me fala um pouco sobre o que você precisa...")]
+        [Prompt("Me fala um pouco sobre o artigo que você queria ver...")]
         [Optional]
         public string Describe { get; set; }
 
        
-        public static IForm<CaptureLead> BuildForm()
+        public static IForm<SuggesetionArticle> BuildForm()
         {
 
             OnCompletionAsyncDelegate<CaptureLead> processOrder = async (context, state) =>
@@ -45,7 +42,7 @@ namespace Bot4App.Forms
 
             };
 
-            var form = new FormBuilder<CaptureLead>();
+            var form = new FormBuilder<SuggesetionArticle>();
             form.Configuration.DefaultPrompt.ChoiceStyle = ChoiceStyleOptions.Buttons;
 
             form.Configuration.Yes = new string[] { "sim", "yes", "s", "y", "yeap", "ok" };
@@ -99,17 +96,14 @@ namespace Bot4App.Forms
         public override string ToString()
         {
             var builder = new StringBuilder();
-            builder.AppendFormat("Tipo de Desenvolvimento.: {0}, ", TipoDesenvolvimento);
+            builder.AppendFormat("Tipo de Artigo.: {0}, ", TipoArtigo);
             builder.AppendFormat("Nome: {0}: ", Name);
             builder.AppendFormat("Email: {0} ", Email);
-            builder.AppendFormat("Fone: {0} ", Fone);
             builder.AppendFormat("Descrição: {0} ", Describe);
-
             return builder.ToString();
         }
 
     }
-
 
 
 

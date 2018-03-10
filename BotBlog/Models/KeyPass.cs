@@ -10,10 +10,11 @@ namespace BotBlog.Models
 
         //msg
         internal static string _MsgNotUndertand = $"Hum... Minha conciência não entende isso ainda, mas com certeza aprenderei mais sobre isso... ";
-        internal static string _MsgHelp = $"Posso responder sobre:\n" +
-            "* **(Search) Postagens no blog**, \n" +
-            "* **Me contratar**, \n" +
-            "* **Responder sobre o autor deste blog**... ";
+        internal static string _MsgHelp = $"Posso te ajuda a :\n" +
+            "* **Encontrar artigos no blog**, \n" +
+            "* **Registrar Sugestão de artigos**, \n" +
+            "* **Contratar consultoria**, \n" +
+            "* **Anunciar conosco**, \n";
 
         //luis
         internal static string _LuisModelId = "646ff876-0858-4d57-9f6c-78e995779540";

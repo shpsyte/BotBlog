@@ -129,6 +129,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Dialogs\Luis.ai\LuisBasicDialog.cs" />
+    <Compile Include="Dialogs\Luis.ai\PayArticleDialog.cs" />
+    <Compile Include="Dialogs\Luis.ai\SugestionArticleDialog.cs" />
     <Compile Include="Dialogs\Luis.ai\RequestQuoteDialog.cs" />
     <Compile Include="Dialogs\Qna\FeedbackDialog.cs" />
     <Compile Include="Dialogs\Qna\QnaAboutMe.cs" />
@@ -136,6 +138,9 @@
     <Compile Include="Dialogs\Qna\QnaBlogSite.cs" />
     <Compile Include="Dialogs\Qna\QnaGreeting.cs" />
     <Compile Include="Dialogs\RootDialog.cs" />
+    <Compile Include="Forms\Enums.cs" />
+    <Compile Include="Forms\PayArticles.cs" />
+    <Compile Include="Forms\SuggesetionArticle.cs" />
     <Compile Include="Forms\CaptureLead.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
